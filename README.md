@@ -30,12 +30,14 @@ This also enables us to type code in our laptops (a much better environment) rat
 ## GPS Set-Up
 We are using the Adafruit Ultimate GPS Breakout Board, but this should also work for most other GPS sensors.
 First, connect the GPS to the Raspberry Pi accordingly:
+
 |GPS      |Raspberry Pi  |
 |---------|--------------|
 |Vin      | 3.3V         |
 |GND      | GND          |
 |RX       | UART  TX     |
 |TX       | UART  RX     |
+
 Do note that, regarding this specific GPS sensor, it works better if you connect an external active antenna to the ANT port. It is not required, since it has a small lower-gain built-in ceramic antenna inside, but since we are going to be programming and developing inside a building, it is too weak to get a signal, hence we won't receive any data. I circumvented this by attaching an external antenna and then sticking the antenna on the window, which then allows me to obtain a connection.
 
 1. First, we want to set up minicom, so we can test out the UART ports.
