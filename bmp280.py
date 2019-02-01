@@ -3,7 +3,7 @@
 
 import board
 import busio
-import adafruit_bmp280      #Although we are using the BMP290, it is simply an upgraded version of the BMP280, and we are going to use the Adafruit Libraries.
+import adafruit_bmp280      # We are going to use Adafruit's library as a driver for this sensor.
 
 i2c = busio.I2C(board.SCL, board.SDA)
 sensor = adafruit_bmp280.Adafruit_BMP280_I2C(i2c)
@@ -17,7 +17,7 @@ def Get_Data():
         altitude = bmp280.altitude          #   In Meters
         return temperature,pressure,altitude
     except IOError:
-        print('BMP290 Connection Error')
+        print('BMP280 Connection Error')
         return 0,0,0
 
 if __name__ == "__main__":
