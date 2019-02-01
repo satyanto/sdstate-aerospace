@@ -8,9 +8,15 @@ Below you can see all the written documentation and how-to's regarding how to la
 
 
 ## New Raspberry Pi Set-Up
-1. First, open up the terminal. We should update our Raspberry Pi:
+1. First, open up the terminal. We should first run standard updates for our Raspberry Pi:
 ```
 sudo apt-get update
+```
+```
+sudo apt-get upgrade
+```
+```
+sudo pip3 install --upgrade setuptools
 ```
 2. We will also enable the interface options I2C (for sensors - we'll be using the SDA/SCL ports), serial (for the GPS, which will use the UART's RX and TX ports.) We can enable these interfaces using the command below:
 ```
@@ -27,6 +33,44 @@ git pull
 ```
 This will mean that any changes to the code in this repository, will be 'pulled' into the local file on the Raspberry Pi.
 This also enables us to type code in our laptops (a much better environment) rather than the Raspberry Pi, and have it automatically update on the Pi itself. This also allows us to store the code in an online environment, so if we lose a Raspberry Pi, we can always have the latest up-to-date codebase with all our programs ready to go.
+
+5. Other necessities:
+We would also want to enable the Raspberry Pi GPIO (General Purpose Input/Output) pins library, needed for Adafruit Blinka and we'll be using the Raspberry Pi's output pins to send either a HIGH or LOW signal:
+```
+pip3 install RPI.GPIO
+```
+Since we'll be using a lot of Adafruit-made sensors, we'll need to install their Adafruit Blinka library:
+```
+pip3 install adafruit-blinka
+```
+
+
+## Quick Command-Line References:
+To check sensors that are connected through the I2C protocol:
+```
+sudo i2cdetect -y 1
+```
+
+
+## BMP280 Barometric Pressure, Temperature Sensor Set-Up
+We are using the Adafruit BMP280, which uses a Bosch sensor to measure temperature and barometric pressure, and from both readings, we can estimate the altitude.
+For this project, we are going to interface mainly with the I2C serial protocol.
+
+|BMP280   |Raspberry Pi  |
+|---------|--------------|
+|VIN      | 3.3V         |
+|GND      | GND          |
+|SCK      | SCL          |
+|SDI      | SDA          |
+
+After connecting the wiring as above, we will use Adafruit's included BMP280 CircuitPython library. Since we already have installed Adafruit's Blinka library, all we have to do now is install this specific sensor's library, and we can do this by:
+```
+sudo pip3 install adafruit-circuitpython-bmp280
+```
+
+A python Get_Data() function for the BMP280 can be found in this repository. It uses the Adafruit's
+BMP280 library but wraps it in another function for the sake of organization. Therefore, to use the BMP280 sensor, you can simply call the Get_Data() function after importing the bmp280.py python file.
+An example can be found in the master python code (master.py)
 
 ## GPS Set-Up
 We are using the Adafruit Ultimate GPS Breakout Board, but this should also work for most other GPS sensors.
