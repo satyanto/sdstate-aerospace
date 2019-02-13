@@ -6,7 +6,7 @@ import busio
 import adafruit_bmp280      # We are going to use Adafruit's library as a driver for this sensor.
 
 i2c = busio.I2C(board.SCL, board.SDA)
-sensor = adafruit_bmp280.Adafruit_BMP280_I2C(i2c)
+bmp280 = adafruit_bmp280.Adafruit_BMP280_I2C(i2c)
 
 bmp280.sea_level_pressure = 1032    # (mbar/hPa) Taken from NOAA data from Brookings Municipal Airport
 
