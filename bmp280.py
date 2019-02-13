@@ -15,6 +15,12 @@ def Get_Data():
         temperature = bmp280.temperature    #   In Celsius
         pressure = bmp280.pressure          #   In hPa
         altitude = bmp280.altitude          #   In Meters
+
+        #testing purposes
+        print(temperature)
+        print(pressure)
+        print(altitude)
+
         return temperature,pressure,altitude
     except IOError:
         print('BMP280 Connection Error')
