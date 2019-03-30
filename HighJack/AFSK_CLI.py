@@ -10,7 +10,7 @@ os.system("aplay cmdline.wav")
 
 i = 1
 while i < 8:
-    msg = "test: "
+    msg = "test: " + str(i)
     loopmsg = '"{}"'.format(msg)
     loopcommand = "aprs -c KE0TSL -o cmdline.wav " + loopmsg
     os.system(loopcommand)
