@@ -1,6 +1,7 @@
 import os
 import time
-import pygame
+from pydub import AudioSegment
+from pydub.playback import play
 
 message = "'TEST TWO'"
 command = "aprs -c KE0TSL -o testclis.wav " + message
@@ -9,6 +10,5 @@ os.system(command)
 
 time.sleep(2)
 
-pygame.mixer.init(frequency=44100, size=16)
-pygame.mixer.music.load('/home/pi/sdstate-aerospace/HighJack/clitest.wav')
-pygame.mixer.music.play()
+song = AudioSegment.from_wav("testclis.wav")
+play(song)
