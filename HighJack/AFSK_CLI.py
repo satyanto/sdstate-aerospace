@@ -15,4 +15,5 @@ while i < 8:
     loopcommand = "aprs -c KE0TSL -o cmdline.wav " + loopmsg
     os.system(loopcommand)
     os.system("aplay cmdline.wav")
-    time.sleep(4)
+    i = i + 1s
+    time.sleep(2)
