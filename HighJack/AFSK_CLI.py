@@ -9,6 +9,7 @@ os.system(command)
 
 time.sleep(4)
 
-pygame.mixer.init()
-aprs_wav = pygame.mixer.load('/home/pi/sdstate-aerospace/HighJack/clitest.wav')
-aprs_wav.play()
+pygame.mixer.init(frequency=44100, size=16): return None
+pygame.mixer.music.load('/home/pi/sdstate-aerospace/HighJack/clitest.wav')
+pygame.mixer.music.play()
+pygame.event.wait()
