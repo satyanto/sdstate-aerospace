@@ -3,7 +3,7 @@ import time
 import pygame
 
 message = "'TEST TWO'"
-command = "aprs -c KE0TSL -o clitest.wav " + message
+command = "aprs -c KE0TSL -o testclis.wav " + message
 
 os.system(command)
 
