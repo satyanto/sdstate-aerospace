@@ -2,14 +2,13 @@ import os
 import time
 import pygame
 
-pygame.init()
-
-message = "'HELL YEAH BABY THIS CLI PROGRAM WORKS'"
+message = "'TEST TWO'"
 command = "aprs -c KE0TSL -o clitest.wav " + message
 
 os.system(command)
 
 time.sleep(4)
 
-aprs_wav = pygame.mixer.Sound('/home/pi/sdstate-aerospace/HighJack/clitest.wav')
+pygame.mixer.init()
+aprs_wav = pygame.mixer.load('/home/pi/sdstate-aerospace/HighJack/clitest.wav')
 aprs_wav.play()
