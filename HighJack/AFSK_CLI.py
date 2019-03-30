@@ -3,12 +3,10 @@ import time
 from pydub import AudioSegment
 from pydub.playback import play
 
-message = "'TEST TWO'"
-command = "aprs -c KE0TSL -o testclis.wav " + message
+message = "'TEST THREE WOOOOOHOOOO'"
+command = "aprs -c KE0TSL -o testthree.wav " + message
 
 os.system(command)
 
-time.sleep(2)
-
-song = AudioSegment.from_wav("testclis.wav")
+song = AudioSegment.from_wav("testthree.wav")
 play(song)
