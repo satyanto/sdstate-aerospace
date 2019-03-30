@@ -9,7 +9,7 @@ os.system(command)
 
 time.sleep(2)
 
-pygame.mixer.init(frequency=44100, size=16): return None
+pygame.mixer.init(frequency=44100, size=16)
 pygame.mixer.music.load('/home/pi/sdstate-aerospace/HighJack/clitest.wav')
 pygame.mixer.music.play()
 pygame.event.wait()
