@@ -7,7 +7,7 @@ command = "aprs -c KE0TSL -o clitest.wav " + message
 
 os.system(command)
 
-time.sleep(4)
+time.sleep(2)
 
 pygame.mixer.init(frequency=44100, size=16): return None
 pygame.mixer.music.load('/home/pi/sdstate-aerospace/HighJack/clitest.wav')
