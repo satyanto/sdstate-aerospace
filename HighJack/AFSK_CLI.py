@@ -13,5 +13,3 @@ if os.path.isfile('/home/pi/sdstate-aerospace/HighJack/clitest.wav)'):
     #file exists
     aprs_wav = pygame.mixer.Sound('/home/pi/sdstate-aerospace/HighJack/clitest.wav')
     aprs_wav.play()
-else:
-    #file doesn't exist
