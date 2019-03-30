@@ -13,7 +13,7 @@ bmp280.sea_level_pressure = 1032    # (mbar/hPa) Taken from NOAA data from Brook
 def Get_Data():
     try:
         temperature = bmp280.temperature    #   In Celsius
-        pressure = bmp280.pressure          #   In hPa
+        pressure = bmp280.pressure          #   In hPa / mbar
         altitude = bmp280.altitude          #   In Meters
 
         #testing purposes
@@ -28,4 +28,3 @@ def Get_Data():
 
 if __name__ == "__main__":
     Get_Data()
-
