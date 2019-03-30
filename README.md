@@ -53,7 +53,14 @@ sudo i2cdetect -y 1
 
 
 ## APRS Set-Up
+1. Install Direwolf
+2. Install AFSK 
 https://github.com/casebeer/afsk
+3. Configure our audio output / input devices on the Raspberry Pi
+
+
+
+APRS Further Reading / Sources:
 https://www.raspberrypi.org/forums/viewtopic.php?t=136974
 https://learn.adafruit.com/usb-audio-cards-with-a-raspberry-pi/updating-alsa-config
 http://midnightcheese.com/2015/12/super-simple-aprs-position-beacon/
