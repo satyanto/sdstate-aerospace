@@ -16,11 +16,11 @@ import adafruit_gps
 
 # Create a serial connection for the GPS connection using default speed and
 # a slightly higher timeout (GPS modules typically update once a second).
-uart = busio.UART(TX, RX, baudrate=9600, timeout=3000)
+#uart = busio.UART(TX, RX, baudrate=9600, timeout=3000)
 
 # for a computer, use the pyserial library for uart access
 import serial
-uart = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=3000)
+uart = serial.Serial("/dev/ttyUSB0", baudrate=9600, timeout=3000)
 
 # Create a GPS module instance.
 gps = adafruit_gps.GPS(uart, debug=False)
