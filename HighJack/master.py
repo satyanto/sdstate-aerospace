@@ -111,10 +111,6 @@ csv_filename = 'Data: '+time.strftime('%mm%dd%yy_%Hh%Mm%Ss')+'.csv'
 with open(csv_filename, 'w') as dataInit:
     dataInit = csv.writer(dataInit, delimiter=',', lineterminator='\n')
     dataInit.writerow(datarows)
-
-
-# test
-
         
 while True:
     if (BMP280 == True):
@@ -163,5 +159,7 @@ while True:
             str(GPS_Data[5]),                       # GPS Altitude (m)
             str(GPS_Data[6]),                       # GPS Speed (kph)
         ])
+    
+    
 
-        time.sleep(1)
+    time.sleep(1)
