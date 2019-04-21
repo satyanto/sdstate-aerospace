@@ -55,10 +55,10 @@ else:
 datarows = [
     'Time',                                                 #0
     'BMP280 Pressure (kPa)',                                #1
-    'BMP280 Temperature ('+deg.encode("utf8")+'C)',         #2
+    'BMP280 Temperature ('+str(deg.encode("utf8"))+'C)',         #2
     'BMP280 Altitude Estimation (m)',                       #3
     'MPL3115A2 Pressure (kPa)',                             #4
-    'MPL3115A2 Temperature ('+deg.encode("utf8")+'C)',      #5
+    'MPL3115A2 Temperature ('+str(deg.encode("utf8"))+'C)',      #5
     'MPL3115A2 Altitude Estimation (m)',                    #6
     'LIS3DH Acceleration X (m/s^2)',                        #7
     'LIS3DH Acceleration Y (m/s^2)',                        #8
@@ -68,11 +68,11 @@ datarows = [
     'GPS Fix Timestamp (Seconds)',                          #12
     'GPS Fix Type',                                         #13
     'GPS # Satellites',                                     #14
-    'GPS Latitude ('+deg.encode("utf8")+')',                #15
-    'GPS Latitude ('+apo.encode("utf8")+')',                #16
+    'GPS Latitude ('+str(deg.encode("utf8"))+')',                #15
+    'GPS Latitude ('+str(apo.encode("utf8"))+')',                #16
     'GPS Latitude (Direction)',                             #17
-    'GPS Longitude ('+deg.encode("utf8")+')',                #18
-    'GPS Longitude ('+apo.encode("utf8")+')',                #19
+    'GPS Longitude ('+str(deg.encode("utf8"))+')',                #18
+    'GPS Longitude ('+str(apo.encode("utf8"))+')',                #19
     'GPS Longitude (Direction)',                            #20
     'GPS Altitude (m)',                                     #21
     'GPS Speed (kph)',                                      #22
