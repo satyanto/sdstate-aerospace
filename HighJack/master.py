@@ -17,7 +17,7 @@ apo = u"\u0027"             # Apostrophe Symbol
 
 # Search for BMP280 sensor connection
 try: 
-    import bmp280.py
+    import bmp280
 except ImportError:
     print('Error importing BMP280 sensor')
 else:
@@ -26,7 +26,7 @@ else:
 
 # Search for MPL3115A2 sensor connection
 try:
-    import mpl3115a2.py
+    import mpl3115a2
 except ImportError:
     print('Error importing MPL3115A2 sensor')
 else:
@@ -35,7 +35,7 @@ else:
 
 # Search for LIS3DH sensor connection
 try:
-    import lis3dh.py
+    import lis3dh
 except ImportError:
     print('Error importing LIS3DH sensor')
 else:
@@ -44,7 +44,7 @@ else:
 
 # Search for GPS sensor connection
 try:
-    import gps.py
+    import gps
 except ImportError:
     print('Error importing GPS sensor')
 else:
