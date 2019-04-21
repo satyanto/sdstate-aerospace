@@ -6,7 +6,7 @@ import busio
 import adafruit_mpl3115a2
 
 i2c = busio.I2C(board.SCL, board.SDA)
-mpl3115a2 = adafruit_mpl3115a2.MPL3115A2(i2c)
+mpl3115a2 = adafruit_mpl3115a2.MPL3115A2(i2c, address=0x60)
 
 mpl3115a2.sealevel_pressure = 102030
 
