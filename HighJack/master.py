@@ -77,12 +77,12 @@ datarows = [
     'GPS Speed (kph)',                                      #22
 ]
 
-if (BMP280=False):
+if (BMP280==False):
     datarows[1] = 'BMP280 N/A',
     datarows[2] = 'BMP280 N/A',
     datarows[3] = 'BMP280 N/A',
 
-if (MPL3115A2=False):
+if (MPL3115A2==False):
     datarows[4] = 'MPL3115A2 N/A',
     datarows[5] = 'MPL3115A2 N/A',
     datarows[6] = 'MPL3115A2 N/A',
