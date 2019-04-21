@@ -85,6 +85,8 @@ sudo pip3 install adafruit-circuitpython-bmp280
 A python Get_Data() function for the BMP280 can be found in this repository. It uses the Adafruit's BMP280 library but wraps it in another function for the sake of organization. Therefore, to use the BMP280 sensor, you can simply call the Get_Data() function after importing the bmp280.py python file.
 An example can be found in the master python code (master.py)
 
+The I2C address of the BMP280 sensor is 7x77.
+
 ## MPL3115A2 Altimeter Sensor Set-Up
 The Adafruit MPL3115A2 sensor uses barometric pressure and temperature readings to estimate an altitude value. This sensor is very similar to the BMP280 sensor we are using above. We will also connect the sensor using the I2C serial protocol, to the Raspberry Pi.
 
@@ -100,7 +102,7 @@ After connecting the wires according to the above table, we will also use Adafru
 sudo pip3 install adafruit-circuitpython-mpl3115a2
 ```
 
-The I2C address of the MPL3115A2 sensor is 60.
+The I2C address of the MPL3115A2 sensor is 0x60.
 
 ## LIS3DH 3-axis Accelerometer Sensor Set-Up
 The Adafruit LIS3DH sensor will measure the acceleration in the X,Y, and Z axis.
@@ -117,7 +119,7 @@ After connecting the wires according to the above table, we will also use Adafru
 sudo pip3 install adafruit-circuitpython-lis3dh
 ```
 
-The I2C address of the LIS3DH sensor is 18.
+The I2C address of the LIS3DH sensor is 8x18.
 
 ## GPS Set-Up
 We are using the Adafruit Ultimate GPS Breakout Board, but this should also work for most other GPS sensors.
