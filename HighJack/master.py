@@ -10,6 +10,7 @@ import time
 LIS3DH = False
 BMP280 = False
 MPL3115A2 = False
+GPS = False
 
 deg = u'\N{DEGREE SIGN}'    # Degree Symbol
 apo = u"\u0027"             # Apostrophe Symbol
