@@ -168,7 +168,7 @@ while True:
     aprs_Pressure = BMP280_Data[0]
     aprs_Temperature = BMP280_Data[1]
     aprs_EAltitude = BMP280_Data[2]
-    Message = "HJ4 - Alt: {}, Lat: {0:.6f}, Lon: {0:.6f}, Spd: {}, Prs: {:02}, Tmp: {:01}, EAlt: {:01}".format(
+    Message = "HJ4 - Alt: {}, Lat: {:.6f}, Lon: {:.6f}, Spd: {}, Prs: {:02}, Tmp: {:01}, EAlt: {:01}".format(
         aprs_Altitude,aprs_Latitude,aprs_Longitude,aprs_Speed,aprs_Pressure,aprs_Temperature,aprs_EAltitude)
     WrappedMessage = '"{}"'.format(Message)
     APRScommand = "aprs -c KE0TSL -o aprspacket.wav" + WrappedMessage
