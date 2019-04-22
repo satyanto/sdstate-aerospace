@@ -161,8 +161,15 @@ while True:
 
 
     # Form an APRS Packet using the Command Line
+    aprs_Altitude = GPS_Data[4]
+    aprs_Latitude = GPS_Data[1]
+    aprs_Longitude = GPS_Data[2]
+    aprs_Speed = GPS_Data[5]
+    aprs_Pressure = BMP280_Data[0]
+    aprs_Temperature = BMP280_Data[1]
+    aprs_EAltitude = BMP280_Data[2]
     Message = "HJ4 - Alt: {}, Lat: {0:.6f}, Lon: {0:.6f}, Spd: {}, Prs: {:02}, Tmp: {:01}, EAlt: {:01}".format(
-        GPS_Data[4],GPS_Data[1],GPS_Data[2],GPS_Data[5],BMP280_Data[0],BMP280_Data[1],BMP280_Data[2])
+        aprs_Altitude,aprs_Latitude,aprs_Longitude,aprs_Speed,aprs_Pressure,aprs_Temperature,aprs_EAltitude)
     WrappedMessage = '"{}"'.format(Message)
     APRScommand = "aprs -c KE0TSL -o aprspacket.wav" + WrappedMessage
 
