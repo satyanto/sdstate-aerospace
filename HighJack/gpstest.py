@@ -14,6 +14,7 @@ import adafruit_gps
 #RX = board.RX
 #TX = board.TX
 
+
 # Create a serial connection for the GPS connection using default speed and
 # a slightly higher timeout (GPS modules typically update once a second).
 #uart = busio.UART(TX, RX, baudrate=9600, timeout=3000)

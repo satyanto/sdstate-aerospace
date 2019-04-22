@@ -5,6 +5,7 @@
 # inserted vertically per iteration as a CSV file).
 
 import csv
+import os
 import time
 
 LIS3DH = False
@@ -55,10 +56,10 @@ else:
 datarows = [
     'Time',                                                 #0
     'BMP280 Pressure (kPa)',                                #1
-    'BMP280 Temperature ('+str(deg.encode("utf8"))+'C)',         #2
+    'BMP280 Temperature ('+deg.encode("utf8")+'C)',         #2
     'BMP280 Altitude Estimation (m)',                       #3
     'MPL3115A2 Pressure (kPa)',                             #4
-    'MPL3115A2 Temperature ('+str(deg.encode("utf8"))+'C)',      #5
+    'MPL3115A2 Temperature ('+deg.encode("utf8")+'C)',      #5
     'MPL3115A2 Altitude Estimation (m)',                    #6
     'LIS3DH Acceleration X (m/s^2)',                        #7
     'LIS3DH Acceleration Y (m/s^2)',                        #8
@@ -66,16 +67,14 @@ datarows = [
     'GPS Fix Timestamp (Hours)',                            #10
     'GPS Fix Timestamp (Minutes)',                          #11
     'GPS Fix Timestamp (Seconds)',                          #12
-    'GPS Fix Type',                                         #13
-    'GPS # Satellites',                                     #14
-    'GPS Latitude ('+str(deg.encode("utf8"))+')',                #15
-    'GPS Latitude ('+str(apo.encode("utf8"))+')',                #16
-    'GPS Latitude (Direction)',                             #17
-    'GPS Longitude ('+str(deg.encode("utf8"))+')',                #18
-    'GPS Longitude ('+str(apo.encode("utf8"))+')',                #19
-    'GPS Longitude (Direction)',                            #20
-    'GPS Altitude (m)',                                     #21
-    'GPS Speed (kph)',                                      #22
+    'GPS Latitude (Degrees)',                               #13
+    'GPS Longitude (Degrees)',                              #14
+    'GPS # Satellites',                                     #15
+    'GPS Altitude (meters)',                                #16
+    'GPS Speed (knots)',                                    #17
+    'GPS Track Angle (degrees)',                            #18
+    'GPS Horizontal Dilution',                              #19
+    'GPS Height Geo ID',                                    #20
 ]
 
 if (BMP280==False):
@@ -105,8 +104,6 @@ if (GPS==False):
     datarows[18] = 'GPS N/A',
     datarows[19] = 'GPS N/A',
     datarows[20] = 'GPS N/A',
-    datarows[21] = 'GPS N/A',
-    datarows[22] = 'GPS N/A',
 
 csv_filename = 'Data: '+time.strftime('%mm%dd%yy_%Hh%Mm%Ss')+'.csv'
 with open(csv_filename, 'w') as dataInit:
@@ -132,8 +129,11 @@ while True:
     if (GPS == True):
         GPS_Data = gps.Get_Data()
     else:
-        GPS_Data = [[0,0,0], 0, 0, [0,0,0], [0,0,0], 0, 0]
+        GPS_Data = [["Error","Error","Error"], "Error", "Error", "Error", "Error", "Error", "Error", "Error", "Error" ]
+        # Time[Hours,Min,Secs],Latitude,Longitude,Satellites,Altitude,Speed,TrackAngle,HorizontalDilution,HeightGeoID
 
+
+    # Datalog the sensor values and GPS data into a CSV file.
     with open(csv_filename, 'a') as csvFile:
         dataLogger = csv.writer(csvFile, delimiter=',', lineterminator='\n')
         dataLogger.writerow([time.strftime('%m/%d/%Y %H:%M:%S%z'),
@@ -146,21 +146,30 @@ while True:
             str(LIS3DH_Data[0]),                    # LIS3DH Acceleration X (m/s^2)
             str(LIS3DH_Data[1]),                    # LIS3DH Acceleration Y (m/s^2)
             str(LIS3DH_Data[2]),                    # LIS3DH Acceleration Z (m/s^2)
-            str(GPS_Data[0][0]),                    # GPS Fix Timestamp Hours
-            str(GPS_Data[0][1]),                    # GPS Fix Timestamp Minutes
-            str(GPS_Data[0][2]),                    # GPS Fix Timestamp Seconds
-            str(GPS_Data[1]),                       # GPS Fix Type (integer)
-            str(GPS_Data[2]),                       # GPS #Satellites (integer)
-            str(GPS_Data[3][0]),                    # GPS Latitude (Degrees)
-            str(GPS_Data[3][1]),                    # GPS Latitude (Minutes)
-            str(GPS_Data[3][2]),                    # GPS Latitude Direction (string, S or N)
-            str(GPS_Data[4][0]),                    # GPS Longitude (Degrees)
-            str(GPS_Data[4][1]),                    # GPS Longitude (Minutes)
-            str(GPS_Data[4][2]),                    # GPS Longitude Direction (string, W or E)
-            str(GPS_Data[5]),                       # GPS Altitude (m)
-            str(GPS_Data[6]),                       # GPS Speed (kph)
+            GPS_Data[0][0],                         # GPS Fix Timestamp Hours
+            GPS_Data[0][1],                         # GPS Fix Timestamp Minutes
+            GPS_Data[0][2],                         # GPS Fix Timestamp Seconds
+            GPS_Data[1],                            # GPS Latitude (Degrees)
+            GPS_Data[2],                            # GPS Longitude (Degrees)
+            GPS_Data[3],                            # GPS # Satellites
+            GPS_Data[4],                            # GPS Altitude (meters)
+            GPS_Data[5],                            # GPS Speed (knots)
+            GPS_Data[6],                            # GPS Track Angle (degrees)
+            GPS_Data[7],                            # GPS Horizontal Dilution
+            GPS_Data[8],                            # GPS Height Geo ID
         ])
-    
-    
 
-    time.sleep(1)
+
+    # Form an APRS Packet using the Command Line
+    Message = "HJ4 - Alt: {}, Lat: {0:.6f}, Lon: {0:.6f}, Spd: {}, Prs: {:02}, Tmp: {:01}, EAlt: {:01}".format(
+        GPS_Data[4],GPS_Data[1],GPS_Data[2],GPS_Data[5],BMP280_Data[0],BMP280_Data[1],BMP280_Data[2])
+    WrappedMessage = '"{}"'.format(Message)
+    APRScommand = "aprs -c KE0TSL -o aprspacket.wav" + WrappedMessage
+
+    # Convert to .WAV file
+    os.system(APRScommand)
+
+    # Play .WAV file
+    os.system("aplay aprspacket.wav")
+
+    time.sleep(2.5) # Limited to GPS's timeout
