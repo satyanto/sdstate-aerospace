@@ -172,7 +172,7 @@ while True:
     #     aprs_Altitude,aprs_Latitude,aprs_Longitude,aprs_Speed,aprs_Pressure,aprs_Temperature,aprs_EAltitude)
     Message = "HJ4 - Alt: "+GPS_Data[4]+", Lat: "+GPS_Data[1]+", Lon: "+GPS_Data[2]+", Spd: "+GPS_Data[5]+", Prs: {:02}, Tmp: {:01}, EAlt: {:01}".format(BMP280_Data[0],BMP280_Data[1],BMP280_Data[2])
     WrappedMessage = '"{}"'.format(Message)
-    APRScommand = "aprs -c KE0TSL -o aprspacket.wav" + WrappedMessage
+    APRScommand = "aprs -c KE0TSL -o aprspacket.wav " + WrappedMessage
 
     # Convert to .WAV file
     os.system(APRScommand)
