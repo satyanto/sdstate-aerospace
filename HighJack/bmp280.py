@@ -8,7 +8,7 @@ import adafruit_bmp280      # We are going to use Adafruit's library as a driver
 i2c = busio.I2C(board.SCL, board.SDA)
 bmp280 = adafruit_bmp280.Adafruit_BMP280_I2C(i2c)
 
-bmp280.sea_level_pressure = 1032    # (mbar/hPa) Taken from NOAA data from Brookings Municipal Airport
+bmp280.sea_level_pressure = 1016    # (mbar/hPa) Taken from NOAA data from Brookings Municipal Airport
 
 def Get_Data():
     try:
@@ -21,7 +21,7 @@ def Get_Data():
         print(pressure)
         print(altitude)
 
-        return temperature,pressure,altitude
+        return pressure,temperature,altitude
     except IOError:
         print('BMP280 Connection Error')
         return 0,0,0

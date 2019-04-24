@@ -32,26 +32,62 @@
 
 from smbus import SMBus
 import time
+
+# i2c_address = 0x60
+# ctrl_reg1 = 0x26
+# pt_data_cfg = 0x13
 bus = SMBus(1)
+
+# setting = bus.read_byte_data(i2c_address, ctrl_reg1)
+# newsetting = setting | 0x38
+# bus.write_byte_data(i2c_address, ctrl_reg1, newsetting)
+
+# bus.write_byte_data(i2c_address, pt_data_cfg, 0x07)
+
+# setting = bus.read_byte_data(i2c_address, ctrl_reg1)
+# if (setting & 0x02) == 0:
+#     bus.write_byte_data(i2c_address, ctrl_reg1, (setting | 0x02))
 
 def Get_Data():
     try:
+        # pressure_data = bus.read_i2c_block_data(i2c_address,0x01,3)
+        # temperature_data = bus.read_i2c_block_data(i2c_address,0x04,2)
+        
+        # p_msb = pressure_data[0]
+        # p_csb = pressure_data[1]
+        # p_lsb = pressure_data[2]
+        # t_msb = temperature_data[0]
+        # t_lsb = temperature_data[1]
+
+        # pressure = (p_msb << 10) | (p_csb << 2) | (p_lsb >> 6)
+        # p_decimal = ((p_lsb & 0x30) >> 4)/4.0
+
+        # celsius = t_msb + (t_lsb >> 4)/16.0
+        
+
+
+
+
+
+
         bus.write_byte_data(0x60, 0x26, 0xB9)
         bus.write_byte_data(0x60, 0x13, 0x07)
         bus.write_byte_data(0x60, 0x26, 0xB9)
-        #time.sleep(1)
+        time.sleep(0.5)
+
         data = bus.read_i2c_block_data(0x60, 0x00, 6)
-        altitude = (((data[1]*65536)+(data[2]*256)+(data[3]&0xF0))/16)/16
-        temp = ((data[4]*256)+(data[5]&0xF0))/16
-        ctemp = temp/16.0
-        #ftemp = ctemp*1.8+32
+        theight = ((data[1]*65536)+data[2]*256)+(data[3] & 0xF0))/16
+        temp = ((data[4]*256)+(data[5] & 0xF0))/16
+        altitude = theight/16.0
+        ctemp = temp/16
+
         bus.write_byte_data(0x60, 0x26, 0x39)
-        time.sleep(1)
+        time.sleep(0.5)
         data=bus.read_i2c_block_data(0x60, 0x00, 4)
-        press=((data[1]*65536)+(data[2]*256)+(data[3]&0xF0))/16.00
+        press=((data[1]*65536)+(data[2]*256)+(data[3] & 0xF0))/16
         pressure=(press/4.00)/1000.00 #given in kPa
 
-        altitude = altitude - 23680
+        #altitude = altitude - 23680
 
         return pressure,ctemp,altitude
     except IOError:
