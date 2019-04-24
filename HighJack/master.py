@@ -16,12 +16,38 @@ GPS = False
 deg = u'\N{DEGREE SIGN}'    # Degree Symbol
 apo = u"\u0027"             # Apostrophe Symbol
 
+# Refresh Rates:
+# The fastest of our BMP280, MPL3115A2, LIS3DH sensors is the LIS3DH, with a max of 10kHz (10,000 times a second.)
+# However, this is crazy if we are continuously opening and amending a .CSV file, and so we are going to choose to 
+# sample our accelerometer data at a more reasonable 1Hz (1 per second).
+# Our ControlLoop represnts the delay of our main loop function.
+# We will use a 'counter' such that for sensors that has slower refresh rates, we can 'count' the number of iterations
+# that has passed in the loop and then after a certain number of iterations, to update the sensor.
+# Therefore, our control loop time should be dependent on our fastest sensor.
+# ControlLoop_Rate = 1        # seconds
+# BMP280_Rate = 1             # seconds
+# MPL3115A2_Rate = 1          # seconds
+# LIS3DH_Rate = 1             # seconds
+# GPS_Rate = 3                # seconds
+
+# Will calculate the number of iterations needed to update the sensors
+# After each loop, the iterations will be increased by 1.
+# BMP280_Iteration = BMP280_Rate/ControlLoop_Rate
+# MPL3115A2_Iteration = MPL3115A2_Rate/ControlLoop_Rate
+# LIS3DH_Iteration = LIS3DH_Rate/ControlLoop_Rate
+# GPS_Iteration = GPS_Rate/ControlLoop_Rate
+
+# # Find which sensor is the slowest iteration, and then after the max_iteration, reset the iteration count to 0.
+# BMP280_Step = 
+
+Iteration = 0
+
 # Search for BMP280 sensor connection
 try: 
     import bmp280
-except ImportError:
-    print('Error importing BMP280 sensor')
-    pass
+except Exception as E:
+    print('Error importing BMP280 sensor.')
+    print(E)
 else:
     BMP280 = True
     print('BMP280 sensor connected')
@@ -29,9 +55,9 @@ else:
 # Search for MPL3115A2 sensor connection
 try:
     import mpl3115a2
-except ImportError:
+except Exception as E:
     print('Error importing MPL3115A2 sensor')
-    pass
+    print(E)
 else:
     MPL3115A2 = True
     print('MPL3115A2 sensor connected')
@@ -39,9 +65,9 @@ else:
 # Search for LIS3DH sensor connection
 try:
     import lis3dh
-except ImportError:
+except Exception as E:
     print('Error importing LIS3DH sensor')
-    pass
+    print(E)
 else:
     LIS3DH = True
     print('LIS3DH sensor connected')
@@ -49,9 +75,9 @@ else:
 # Search for GPS sensor connection
 try:
     import gps
-except ImportError:
+except Exception as E:
     print('Error importing GPS sensor')
-    pass
+    print(E)
 else:
     GPS = True
     print('Adafruit GPS connected')
@@ -115,6 +141,8 @@ with open(csv_filename, 'w') as dataInit:
     dataInit.writerow(datarows)
         
 while True:
+    Iteration = Iteration + 1
+
     if (BMP280 == True):
         BMP280_Data = bmp280.Get_Data()
     else:
@@ -130,7 +158,7 @@ while True:
     else:
         LIS3DH_Data = [0, 0, 0]
 
-    if (GPS == True):
+    if (GPS == True and Iteration>=3):
         GPS_Data = gps.Get_Data()
     else:
         GPS_Data = [["Error","Error","Error"], "Error", "Error", "Error", "Error", "Error", "Error", "Error", "Error" ]
@@ -174,7 +202,7 @@ while True:
     aprs_EAltitude = BMP280_Data[2]
     # Message = "HJ4 - Alt: {}, Lat: {:.6f}, Lon: {:.6f}, Spd: {}, Prs: {:02}, Tmp: {:01}, EAlt: {:01}".format(
     #     aprs_Altitude,aprs_Latitude,aprs_Longitude,aprs_Speed,aprs_Pressure,aprs_Temperature,aprs_EAltitude)
-    Message = "HJ4 - Alt: "+GPS_Data[4]+", Lat: "+GPS_Data[1]+", Lon: "+GPS_Data[2]+", Spd: "+GPS_Data[5]+", Prs: {:2f}, Tmp: {:1f}, EAlt: {:1f}".format(BMP280_Data[0],BMP280_Data[1],BMP280_Data[2])
+    Message = "H.A.B. - HighJack4 // Alt: "+GPS_Data[4]+"m, Lat: "+GPS_Data[1]+", Lon: "+GPS_Data[2]+", Spd: "+GPS_Data[5]+" knots, iPrs: {:.2f} hPa, iTmp: {:+.1f} C, iEAlt: {:.1f} m, ePrs: {:.2f} kPa, eTmp: {:+.1f} C, eEAlt: {:.1f} m".format(BMP280_Data[0],BMP280_Data[1],BMP280_Data[2],MPL3115A2_Data[0],MPL3115A2_Data[1],MPL3115A2_Data[2])
     WrappedMessage = '"{}"'.format(Message)
     APRScommand = "aprs -c KE0TSL -o aprspacket.wav " + WrappedMessage
 
@@ -184,4 +212,7 @@ while True:
     # Play .WAV file
     os.system("aplay aprspacket.wav")
 
-    time.sleep(2.5) # Limited to GPS's timeout
+    if (Iteration>=3):
+        Iteration = 0
+        
+    time.sleep(1) # Limited to GPS's timeout

@@ -22,8 +22,9 @@ def Get_Data():
         print(altitude)
 
         return pressure,temperature,altitude
-    except IOError:
+    except Exception as E:
         print('BMP280 Connection Error')
+        print(E)
         return 0,0,0
 
 if __name__ == "__main__":

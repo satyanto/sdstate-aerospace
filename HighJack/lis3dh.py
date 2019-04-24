@@ -12,8 +12,9 @@ def Get_Data():
     try:
         x, y, z = [value / adafruit_lis3dh.STANDARD_GRAVITY for value in lis3dh.acceleration]
         return x,y,z
-    except IOError:
+    except Exception as E:
         print('LIS3DH Connection Error')
+        print(E)
         return 0,0,0
 
 if __name__ == "__main__":

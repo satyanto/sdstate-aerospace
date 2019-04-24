@@ -6,7 +6,7 @@ import busio
 import adafruit_gps
 
 import serial
-uart = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=2500)
+uart = serial.Serial("/dev/ttyS0", baudrate=9600, timeout=3000)
 
 gps = adafruit_gps.GPS(uart, debug=False)
 
@@ -66,7 +66,9 @@ def Get_Data():
             HeightGeoID = "No Fix"
 
             return Time,Latitude,Longitude,Satellites,Altitude,Speed,TrackAngle,HorizontalDilution,HeightGeoID
-    except:
+    except Exception as E:
+        print("GPS Connection Error")
+        print(E)
         Time = [
             "Error",
             "Error",

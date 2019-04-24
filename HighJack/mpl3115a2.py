@@ -90,8 +90,9 @@ def Get_Data():
         #altitude = altitude - 23680
 
         return pressure,ctemp,altitude
-    except IOError:
+    except Exception as E:
         print('MPL3115A2 Connection Error')
+        print(E)
         return 0,0,0
 
 if __name__ == "__main__":
