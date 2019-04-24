@@ -202,7 +202,7 @@ while True:
     aprs_EAltitude = BMP280_Data[2]
     # Message = "HJ4 - Alt: {}, Lat: {:.6f}, Lon: {:.6f}, Spd: {}, Prs: {:02}, Tmp: {:01}, EAlt: {:01}".format(
     #     aprs_Altitude,aprs_Latitude,aprs_Longitude,aprs_Speed,aprs_Pressure,aprs_Temperature,aprs_EAltitude)
-    Message = "H.A.B. - HighJack4 // Alt: "+GPS_Data[4]+"m, Lat: "+GPS_Data[1]+", Lon: "+GPS_Data[2]+", Spd: "+GPS_Data[5]+" knots, iPrs: {:.2f} hPa, iTmp: {:+.1f} C, iEAlt: {:.1f} m, ePrs: {:.2f} kPa, eTmp: {:+.1f} C, eEAlt: {:.1f} m".format(BMP280_Data[0],BMP280_Data[1],BMP280_Data[2],MPL3115A2_Data[0],MPL3115A2_Data[1],MPL3115A2_Data[2])
+    Message = "HAB HighJack4 / Alt: "+GPS_Data[4]+", Lat: "+GPS_Data[1]+", Lon: "+GPS_Data[2]+", Spd: "+GPS_Data[5]+", Prs: {:.2f}, iTmp: {}, iEAlt: {}, eTmp: {}, eEAlt: {}".format(BMP280_Data[0],int(BMP280_Data[1]),int(BMP280_Data[2]),int(MPL3115A2_Data[1]),int(MPL3115A2_Data[2]))
     WrappedMessage = '"{}"'.format(Message)
     APRScommand = "aprs -c KE0TSL -o aprspacket.wav " + WrappedMessage
 
