@@ -76,9 +76,9 @@ def Get_Data():
         time.sleep(0.5)
 
         data = bus.read_i2c_block_data(0x60, 0x00, 6)
-        theight = ((data[1]*65536)+data[2]*256)+(data[3] & 0xF0))/16
+        theight = ((data[1]*65536)+(data[2]*256)+(data[3] & 0xF0))/16
         temp = ((data[4]*256)+(data[5] & 0xF0))/16
-        altitude = theight/16.0
+        altitude = theight/16
         ctemp = temp/16
 
         bus.write_byte_data(0x60, 0x26, 0x39)
