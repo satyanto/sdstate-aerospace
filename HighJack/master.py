@@ -55,7 +55,7 @@ else:
 
 datarows = [
     'Time',                                                 #0
-    'BMP280 Pressure (kPa)',                                #1
+    'BMP280 Pressure (hPa)',                                #1
     'BMP280 Temperature (degrees C)',                       #2
     'BMP280 Altitude Estimation (m)',                       #3
     'MPL3115A2 Pressure (kPa)',                             #4
