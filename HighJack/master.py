@@ -8,10 +8,12 @@ import csv
 import os
 import time
 
+
 LIS3DH = False
 BMP280 = False
 MPL3115A2 = False
 GPS = False
+Camera = False
 
 deg = u'\N{DEGREE SIGN}'    # Degree Symbol
 apo = u"\u0027"             # Apostrophe Symbol
@@ -40,7 +42,24 @@ apo = u"\u0027"             # Apostrophe Symbol
 # # Find which sensor is the slowest iteration, and then after the max_iteration, reset the iteration count to 0.
 # BMP280_Step = 
 
-Iteration = 0
+APRSIteration = 0
+CamIteration = 0
+
+
+try: 
+    from picamera import PiCamera
+    import subprocess
+    import time
+except Exception as E:
+    print("Error importing Camera.")
+    print(E)
+else:
+    Camera = True
+    print('Camera connected.')
+
+cmd = "raspistill -o photo"+time.strftime('%mm%dd%yy_%Hh%Mm%Ss')+"%05d.jpg -t 0 -tl 5000"
+subprocess.call(cmd, shell=True)
+		
 
 # Search for BMP280 sensor connection
 try: 
@@ -141,7 +160,8 @@ with open(csv_filename, 'w') as dataInit:
     dataInit.writerow(datarows)
         
 while True:
-    Iteration = Iteration + 1
+    APRSIteration = APRSIteration + 1
+    CamIteration = CamIteration + 1
 
     if (BMP280 == True):
         BMP280_Data = bmp280.Get_Data()
@@ -158,12 +178,20 @@ while True:
     else:
         LIS3DH_Data = [0, 0, 0]
 
-    if (GPS == True and Iteration>=3):
+    if (GPS == True):
         GPS_Data = gps.Get_Data()
     else:
         GPS_Data = [["Error","Error","Error"], "Error", "Error", "Error", "Error", "Error", "Error", "Error", "Error" ]
         # Time[Hours,Min,Secs],Latitude,Longitude,Satellites,Altitude,Speed,TrackAngle,HorizontalDilution,HeightGeoID
 
+    if (Camera == True and CamIteration>=4):
+        CamIteration = 0
+        try:
+            cmd = "raspistill -o photo"+time.strftime('%mm%dd%yy_%Hh%Mm%Ss')+"%05d.jpg -t 0 -tl 5000"
+            subprocess.call(cmd, shell=True)
+        except Exception as E:
+            print('Error taking Camera command')
+            print(E)
 
     # Datalog the sensor values and GPS data into a CSV file.
     with open(csv_filename, 'a') as csvFile:
@@ -192,27 +220,26 @@ while True:
         ])
 
 
-    # Form an APRS Packet using the Command Line
-    aprs_Altitude = GPS_Data[4]
-    aprs_Latitude = GPS_Data[1]
-    aprs_Longitude = GPS_Data[2]
-    aprs_Speed = GPS_Data[5]
-    aprs_Pressure = BMP280_Data[0]
-    aprs_Temperature = BMP280_Data[1]
-    aprs_EAltitude = BMP280_Data[2]
-    # Message = "HJ4 - Alt: {}, Lat: {:.6f}, Lon: {:.6f}, Spd: {}, Prs: {:02}, Tmp: {:01}, EAlt: {:01}".format(
-    #     aprs_Altitude,aprs_Latitude,aprs_Longitude,aprs_Speed,aprs_Pressure,aprs_Temperature,aprs_EAltitude)
-    Message = "HAB HighJack4 / Alt: "+GPS_Data[4]+", Lat: "+GPS_Data[1]+", Lon: "+GPS_Data[2]+", Spd: "+GPS_Data[5]+", Prs: {:.2f}, iTmp: {}, iEAlt: {}, eTmp: {}, eEAlt: {}".format(BMP280_Data[0],int(BMP280_Data[1]),int(BMP280_Data[2]),int(MPL3115A2_Data[1]),int(MPL3115A2_Data[2]))
-    WrappedMessage = '"{}"'.format(Message)
-    APRScommand = "aprs -c KE0TSL -o aprspacket.wav " + WrappedMessage
+    if (APRSIteration>=50):
+        APRSIteration = 0
 
-    # Convert to .WAV file
-    os.system(APRScommand)
+        # Form an APRS Packet using the Command Line
+        aprs_Altitude = GPS_Data[4]
+        aprs_Latitude = GPS_Data[1]
+        aprs_Longitude = GPS_Data[2]
+        aprs_Speed = GPS_Data[5]
+        aprs_Pressure = BMP280_Data[0]
+        aprs_Temperature = BMP280_Data[1]
+        aprs_EAltitude = BMP280_Data[2]
+        # Message = "HJ4 - Alt: {}, Lat: {:.6f}, Lon: {:.6f}, Spd: {}, Prs: {:02}, Tmp: {:01}, EAlt: {:01}".format(
+        #     aprs_Altitude,aprs_Latitude,aprs_Longitude,aprs_Speed,aprs_Pressure,aprs_Temperature,aprs_EAltitude)
+        Message = "HAB HighJack4 / Alt: "+GPS_Data[4]+", Lat: "+GPS_Data[1]+", Lon: "+GPS_Data[2]+", Spd: "+GPS_Data[5]+", Prs: {:.2f}, iTmp: {}, iEAlt: {}, eTmp: {}, eEAlt: {}".format(BMP280_Data[0],int(BMP280_Data[1]),int(BMP280_Data[2]),int(MPL3115A2_Data[1]),int(MPL3115A2_Data[2]))
+        WrappedMessage = '"{}"'.format(Message)
+        APRScommand = "aprs -c KE0TSL -o aprspacket.wav " + WrappedMessage
 
-    # Play .WAV file
-    os.system("aplay aprspacket.wav")
-
-    if (Iteration>=3):
-        Iteration = 0
+        # Convert to .WAV file
+        os.system(APRScommand)
+        # Play .WAV file
+        os.system("aplay aprspacket.wav") 
         
     time.sleep(1) # Limited to GPS's timeout
