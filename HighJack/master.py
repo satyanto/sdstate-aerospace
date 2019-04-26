@@ -7,6 +7,7 @@
 import csv
 import os
 import time
+import subprocess
 
 
 LIS3DH = False
@@ -48,8 +49,6 @@ CamIteration = 0
 
 try: 
     from picamera import PiCamera
-    import subprocess
-    import time
 except Exception as E:
     print("Error importing Camera.")
     print(E)
