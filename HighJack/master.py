@@ -49,6 +49,7 @@ CamIteration = 0
 
 try: 
     from picamera import PiCamera
+    # sudo pip install picamera
 except Exception as E:
     print("Error importing Camera.")
     print(E)
