@@ -8,4 +8,4 @@ with picamera.PiCamera() as camera: #setting up camera
         camera.stop_recording() #recording stopped
 convert = "MP4Box -add /home/pi/Rocket_Software/video.h264 /home/pi/Rocket_Software/new_video.mp4"
 call([convert], shell=True) #executing convert using call
-pring("Video is Converted")
+print("Video is Converted")
