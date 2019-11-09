@@ -5,7 +5,7 @@ from subprocess import call
 currentvideoticker = 0
 videotickerfile = open("videoticker.txt","r+")
 currentvideoticker = int(videotickerfile.read())
-videotickerfile.write(str(incurrentvideoticker+1))
+videotickerfile.write(str(currentvideoticker+1))
 videotickerfile.close()
 
 
