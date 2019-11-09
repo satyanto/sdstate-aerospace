@@ -3,10 +3,13 @@ from time import sleep
 from subprocess import call
 
 currentvideoticker = 0
-videotickerfile = open("videoticker.txt","r+")
-currentvideoticker = int(videotickerfile.read())
-videotickerfile.write(str(currentvideoticker+1))
-videotickerfile.close()
+readvideotickerfile = open("videoticker.txt","r")
+currentvideoticker = int(readvideotickerfile.read())
+readvideotickerfile.close()
+
+writevideotickerfile = open("videoticker.txt","w")
+writevideotickerfile.write(str(currentvideoticker+1))
+writevideotickerfile.close()
 
 
 #with picamera.PiCamera() as camera: #setting up camera
