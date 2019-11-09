@@ -4,8 +4,8 @@ from subprocess import call
 
 currentvideoticker = 0
 videotickerfile = open("videoticker.txt","r+")
-currentvideoticker = videotickerfile.read()
-videotickerfile.write(currentvideoticker+1)
+currentvideoticker = int(videotickerfile.read())
+videotickerfile.write(str(incurrentvideoticker+1))
 videotickerfile.close()
 
 
