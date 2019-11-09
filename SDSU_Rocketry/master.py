@@ -14,8 +14,8 @@ datarows = [
 
 filename = 'Data: '+time.strftime('%mm%dd%yy_%%Hh%Mm%Ss')+'.csv'
 
-with open(filename, 'w') as csvfile
-    csvfile = csv.writer(csvfile, deLimiter=',', lineterminator='\n')
+with open(filename, 'w') as data
+    data = csv.writer(data, deLimiter=',', lineterminator='\n')
     
     #write first row
     csvfile.writerow(datarows)
