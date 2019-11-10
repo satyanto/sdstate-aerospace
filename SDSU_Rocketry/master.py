@@ -39,8 +39,6 @@ with open(csv_filename, 'w') as dataInit:
     dataInit.writerow(datarows)
         
 while True:
-    APRSIteration = APRSIteration + 1
-    CamIteration = CamIteration + 1
     
     if (MPL3115A2 == True):
         MPL3115A2_Data = mpl3115a2.Get_Data()
