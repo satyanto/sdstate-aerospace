@@ -3,7 +3,7 @@ import csv
 import os
 import time
 import subprocess
-
+import camera
 
 MPL3115A2 = False
 
@@ -25,8 +25,8 @@ datarows = [
     'Time',                                                 #0
     'MPL3115A2 Pressure (kPa)',                             #1
     'MPL3115A2 Temperature (degrees C)',                    #2
-    'MPL3115A2 Altitude Estimation (m)',                    #3
-]
+    'MPL3115A2 Altitude (m)',                               #3
+] 
 
 if (MPL3115A2==False):
     datarows[4] = 'MPL3115A2 N/A',
