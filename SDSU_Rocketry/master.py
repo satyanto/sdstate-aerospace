@@ -11,6 +11,15 @@ datarows = [
     'Temperature (C)',
 ]
 
+while True:
+    
+    time.sleep(1)
+
+    if (MPL3115A2 == True):
+        MPL3115A2_Data - mpl3115a2.Get_Data()
+    else:
+        MPL3115A2_Data = [0, 0, 0]
+        
 try:
     import mpl3115a2
 except Exception as E:
@@ -25,15 +34,8 @@ with open(filename, 'w') as csvfile:
     
     #write first row
     csvfile.writerow(datarows)
-:
-while True:
-    
-    time.sleep(1)
 
-    if (MPL3115A2 == True):
-        MPL3115A2_Data - mpl3115a2.Get_Data()
-    else:
-        MPL3115A2_Data = [0, 0, 0]
+
 
 with open(filename, 'a') as datafile:
     datalogger = csv.writer(datafile, delimiter=',', lineterminator='\n')
