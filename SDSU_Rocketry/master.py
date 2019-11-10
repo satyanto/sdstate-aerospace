@@ -2,7 +2,6 @@
 import csv
 import time
 
-import mpl3115a2
 MPL3115A2 = False
 datarows = [
     'Time',
@@ -11,6 +10,13 @@ datarows = [
     'Altitude (ft)',
     'Temperature (C)',
 ]
+
+try:
+    import mpl3115a2
+except Exception as E:
+    print(E)
+else:
+    MPL3115A2 = True
 
 filename = 'Data: '+time.strftime('%mm%dd%yy_%%Hh%Mm%Ss')+'.csv'
 
