@@ -3,18 +3,15 @@ import csv
 import os
 import time
 import subprocess
-import multitasking
-import signal
+import os
 
-multitasking.set_max_threads(10)
-
-signal.signal(signal.SIGINT, multitasking.killall)
-
-@multitasking.task
-def camera(count):
+x=os.fork()
+if x:
     import camera
 
-if __name__ == "__main__":
+else:
+
+
 
 
     MPL3115A2 = False
