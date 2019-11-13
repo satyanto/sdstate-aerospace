@@ -5,9 +5,11 @@ import time
 import subprocess
 import os
 
+quit=0
+
 x=os.fork()
 if x:
-    import camera
+    import camera_test
 
 else:
 
@@ -62,3 +64,6 @@ else:
                 str(MPL3115A2_Data[1]),                 # MPL3115A2 Temperature (K)
                 str(MPL3115A2_Data[2]),                 # MPL3115A2 Altitude Estimation (m)
         ])
+        if quit=1
+            break
+  
