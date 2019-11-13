@@ -50,6 +50,6 @@ while True:
         dataLogger = csv.writer(csvFile, delimiter=',', lineterminator='\n')
         dataLogger.writerow([time.strftime('%m/%d/%Y %H:%M:%S%z'),
             str(MPL3115A2_Data[0]),                 # MPL3115A2 Pressure (kPa)
-            str(MPL3115A2_Data[1]),                 # MPL3115A2 Temperature (kPa)
+            str(MPL3115A2_Data[1]),                 # MPL3115A2 Temperature (K)
             str(MPL3115A2_Data[2]),                 # MPL3115A2 Altitude Estimation (m)
         ])
