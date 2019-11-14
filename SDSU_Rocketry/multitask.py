@@ -9,7 +9,16 @@ quit=0
 
 x=os.fork()
 if x:
-    import camera_test
+    #import camera_test
+    timeout = time.time() + 10   # 10 sec from now
+
+    while True:
+
+        print('The time is: ', time.time())
+        
+        if time.time() > timeout:
+        break
+
 
 else:
 
@@ -48,6 +57,8 @@ else:
     with open(csv_filename, 'w') as dataInit:
         dataInit = csv.writer(dataInit, delimiter=',', lineterminator='\n')
         dataInit.writerow(datarows)
+
+    timeout = time.time() + 10   # 10 sec from now
         
     while True:
     
@@ -64,6 +75,7 @@ else:
                 str(MPL3115A2_Data[1]),                 # MPL3115A2 Temperature (K)
                 str(MPL3115A2_Data[2]),                 # MPL3115A2 Altitude Estimation (m)
         ])
-        if quit=1
-            break
+
+        if time.time() > timeout:
+        break
   
