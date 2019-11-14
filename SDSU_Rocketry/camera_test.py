@@ -19,5 +19,4 @@ with picamera.PiCamera() as camera: #setting up camera
 convert = "MP4Box -add /home/pi/Development/sdstate-aerospace/SDSU_Rocketry/videos.h264/"+filename+".h264 /home/pi/Development/sdstate-aerospace/SDSU_Rocketry/videos.mp4/"+filename+".mp4"
 call([convert], shell=True) #executing convert using call
 print("Video is Converted") 
-quit = 1
-break
+

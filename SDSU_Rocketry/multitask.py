@@ -5,12 +5,12 @@ import time
 import subprocess
 import os
 
-quit=0
+t=30     #time in seconds
 
 x=os.fork()
 if x:
     #import camera_test
-    timeout = time.time() + 10   # 10 sec from now
+    timeout = time.time() + t   # t sec from now
 
     while True:
 
@@ -58,7 +58,7 @@ else:
         dataInit = csv.writer(dataInit, delimiter=',', lineterminator='\n')
         dataInit.writerow(datarows)
 
-    timeout = time.time() + 10   # 10 sec from now
+    timeout = time.time() + t   # t sec from now
         
     while True:
     
